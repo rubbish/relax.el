@@ -140,8 +140,10 @@
     (define-key-after menu [relax-refresh] '("Update doclist" . relax-update-db))
     (define-key-after menu [relax-sp2] '("---"))
     (define-key-after menu [relax-prompt-db] '("Open database..." . relax))
+    (define-key-after menu [relax-create-db] '("Open new database..." . relax-create-db))
     (define-key-after menu [relax-databases] '(menu-item "Switch to database" t
 							 :filter relax-create-db-menu))
+    (define-key-after menu [relax-delete-db] '("Delete database..." . relax-delete-db))
     menu))
 
 (defvar relax-mode-map (let ((map (make-sparse-keymap)))
@@ -222,6 +224,30 @@
     ;; If this changes, change relax-parse-db-line to match.
     (insert (format "  [%s @rev %s]\n" (getf doc :id)
                                        (getf (getf doc :value) :rev)))))
+
+(defun relax-new-db (url)
+  "Create a new database."
+  (interactive (list (completing-read "CouchDB URL: " (relax-url-completions)
+                                      nil nil (relax-url))))
+  (when url
+    (message url)
+    (let ((url-request-method "PUT"))
+      (url-retrieve url (lambda (status url)
+			  (if status
+			      (message (format "%S" status))
+			    (relax url))) (list url)))))
+
+(defun relax-delete-db (url)
+  "Delete a database."
+  (interactive (list (completing-read "CouchDB URL: " (relax-url-completions)
+                                      nil nil (relax-url))))
+  (when url
+    (message url)
+    (let ((url-request-method "DELETE"))
+      (url-retrieve url (lambda (status url)
+			  (if status
+			      (message (format "%S" status))
+			    (message "Ok"))) (list url)))))
 
 (defun relax-new-doc (choose-id)
   "Create a new document. With prefix arg, prompt for a document ID."
