@@ -140,7 +140,7 @@
     (define-key-after menu [relax-refresh] '("Update doclist" . relax-update-db))
     (define-key-after menu [relax-sp2] '("---"))
     (define-key-after menu [relax-prompt-db] '("Open database..." . relax))
-    (define-key-after menu [relax-create-db] '("Open new database..." . relax-create-db))
+    (define-key-after menu [relax-new-db] '("Open new database..." . relax-new-db))
     (define-key-after menu [relax-databases] '(menu-item "Switch to database" t
                                                          :filter relax-create-db-menu))
     (define-key-after menu [relax-delete-db] '("Delete database..." . relax-delete-db))
