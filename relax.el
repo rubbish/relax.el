@@ -26,7 +26,7 @@
 
 ;; (autoload 'relax "relax" "Connect to the CouchDB database at db-url." t)
 
-;; It depends on json.el and espresso.el. These are available
+;; It depends on json.el and js.el. These are available
 ;; through ELPA or if you need to get them manually download from
 ;; http://edward.oconnor.cx/elisp/json.el and
 ;; http://download.savannah.gnu.org/releases-noredirect/espresso/espresso.el
@@ -61,7 +61,7 @@
 (require 'thingatpt)
 (require 'url)
 (require 'json)
-(require 'espresso)
+(require 'js)
 (require 'mm-util) ;; for replace-regexp-in-string
 
 (defvar relax-host "127.0.0.1")
@@ -324,7 +324,7 @@
     (let ((doc-string (buffer-substring-no-properties (point-min) (point-max))))
       (switch-to-buffer (concat "*relax " document-url "*"))
 
-      (espresso-mode)
+      (js-mode)
       (relax-doc-mode t)
       (set (make-local-variable 'http-buffer) json-buffer)
       (set (make-local-variable 'kill-buffer-hook) '(relax-kill-http-buffer))
